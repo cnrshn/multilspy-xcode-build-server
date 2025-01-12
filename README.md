@@ -1,51 +1,92 @@
 # multispy-xcode-build-server
 
-A build server implementation for Xcode projects using multispy.
+Swift language support for [microsoft/multilspy](https://github.com/microsoft/multilspy) using sourcekit-lsp.
+
+## Overview
+
+This repository extends multilspy's language support to include Swift, enabling static analysis of Swift codebases through the Language Server Protocol (LSP). It integrates with sourcekit-lsp to provide the same powerful static analysis capabilities that multilspy offers for other languages.
+
+## Prerequisites
+
+- Python 3.8 or higher
+- Xcode and sourcekit-lsp installed
+- `sourcekit-lsp` in your PATH
 
 ## Installation
 
-bash
+```bash
 pip install multispy-xcode-build-server
+```
 
 ## Usage
 
 ```python
-    config = MultilspyConfig.from_dict({"code_language": "swift"})
-    logger = MultilspyLogger()
+from multilspy.multilspy_config import MultilspyConfig
+from multilspy.multilspy_logger import MultilspyLogger
+from multispy_xcode_build_server import XcodeBuildServer
 
-    lsp = XcodeBuildServer(config, logger, WORKSPACE_PATH)
-    print(lsp)
+# Initialize the server
+config = MultilspyConfig.from_dict({"code_language": "swift"})
+logger = MultilspyLogger()
 
-    async with lsp.start_server():
-        line = LINE
-        column = COLUMN
-        print("started")
-        result = await lsp.request_definition(FILE_PATH, line, column)
-        print_result(result)
+# Create server instance with your workspace path
+lsp = XcodeBuildServer(config, logger, WORKSPACE_PATH)
 
-        result = await lsp.request_hover(FILE_PATH, line, column)
-        print_result(result)
-
-        result = await lsp.request_document_symbols(FILE_PATH)
-        print_result(result)
-
-        result = await lsp.request_rename(FILE_PATH, line, column, "new_name")
-        print_result(result)
-
-        result = await lsp.request_workspace_symbols(" ")
-        print_result(result)
+# Use the server
+async with lsp.start_server():
+    # Find symbol definition
+    definition = await lsp.request_definition(FILE_PATH, line, column)
+    
+    # Get hover information
+    hover = await lsp.request_hover(FILE_PATH, line, column)
+    
+    # Get document symbols
+    symbols = await lsp.request_document_symbols(FILE_PATH)
+    
+    # Rename symbol
+    edits = await lsp.request_rename(FILE_PATH, line, column, "new_name")
+    
+    # Search workspace symbols
+    workspace_symbols = await lsp.request_workspace_symbols("query")
 ```
 
+## Features
+
+This extension supports all standard LSP features provided by sourcekit-lsp:
+
+- Symbol Definition Lookup
+- Symbol References Search
+- Code Completion
+- Hover Information
+- Document Symbols
+- Workspace Symbol Search
+- Symbol Renaming
+
+## Integration with multilspy
+
+This package is designed to work seamlessly with [microsoft/multilspy](https://github.com/microsoft/multilspy), a library developed as part of research for the NeurIPS 2023 paper "Monitor-Guided Decoding of Code LMs with Static Analysis of Repository Context". multilspy provides:
+
+- Language-agnostic static analysis through LSP
+- Automated server management
+- Simplified API for static analysis queries
+- Support for multiple programming languages
 
 ## Development
 
 1. Clone the repository
-2. Install development dependencies: `pip install -e ".[dev]"`
-3. Run tests: `python -m pytest`
+2. Install development dependencies:
+   ```bash
+   pip install -e ".[dev]"
+   ```
+3. Run tests:
+   ```bash
+   python -m pytest
+   ```
 
-## Symbol Kinds
-https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
