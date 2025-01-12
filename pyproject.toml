@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "multispy-xcode-build-server"
+version = "0.1.0"
+description = "Xcode build server for multispy"
+readme = "README.md"
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "multilspy>=0.0.9",
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/multispy-xcode-build-server" 

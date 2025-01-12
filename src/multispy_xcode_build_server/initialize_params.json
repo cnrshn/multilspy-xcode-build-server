@@ -1,0 +1,44 @@
+{
+    "capabilities": {
+        "workspace": {
+            "workspaceFolders": true,
+            "symbol": {
+                "dynamicRegistration": true,
+                "symbolKind": {
+                    "valueSet": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25
+                    ]
+                }
+            }
+        }
+    },
+    "processId": "os.getpid()",
+    "rootPath": "repository_absolute_path",
+    "rootUri": "pathlib.Path(repository_absolute_path).as_uri()",
+    "workspaceFolders": "[\n            {\n                \"uri\": pathlib.Path(repository_absolute_path).as_uri(),\n                \"name\": os.path.basename(repository_absolute_path),\n            }\n        ]"
+
+}
